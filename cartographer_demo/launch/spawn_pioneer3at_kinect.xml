@@ -1,12 +1,8 @@
 <?xml version="1.0"?>
 <launch>
-<!--  <robot xmlns:xacro="http://ros.org/wiki/xacro" name="pioneer3at"/> -->
-
+	
   <param name="robot_description"
     command="xacro --inorder '$(find pioneer_kinect_description)/urdf/pioneer3at-kinect.xacro'"/>
-<!-- https://github.com/wangxian4423/kinect_v2_udrf -->
-  <!--node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-    args="-urdf -x 0 -y 0 -Y 1.57079632679 -model robot -unpause -param robot_description"/-->
 
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
     args="-urdf -x 0 -y 0 -Y 0 -model robot -unpause -param robot_description"/>

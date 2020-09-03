@@ -1,62 +1,53 @@
 <?xml version="1.0"?>
 <launch>
-  <!-- We simulate WillowGarage in gazebo-->
 
-  <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find mapas)/include/mapas/mapa2_calibracion.world"/>
-    <arg name="paused" value="true"/>
-    <arg name="use_sim_time" value="true"/>
-    <arg name="gui" value="true"/>-
-    <arg name="headless" value="false"/>
-    <arg name="recording" value="false"/>
-    <arg name="debug" value="false"/>
-  </include>
+  <!-- We simulate our model in gazebo-->
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="world_name" value="$(find mapas)/include/mapas/mapa2_calibracion.world"/>
+      <arg name="paused" value="true"/>
+      <arg name="use_sim_time" value="true"/>
+      <arg name="gui" value="true"/>-
+      <arg name="headless" value="false"/>
+      <arg name="recording" value="false"/>
+      <arg name="debug" value="false"/>
+    </include>
 
 
   <!-- Put Pioneer3at with hokuyo sensor in our gazebo world-->
-  <include file="$(find gmapping_demo)/launch/spawn_pioneer3at_kinect.xml"/>
+    <include file="$(find gmapping_demo)/launch/spawn_pioneer3at_kinect.xml"/>
   <!-- convert joint states to TF transforms for rviz, etc -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 
-  <!--node pkg="tf" type="static_transform_publisher" name="tf_kinect"
-        args="-0.087 -0.0125 0.2870 0 0 0 base_link kinect2_base_link 1" /-->
-
-
-
-  <!-- Open gmapping slam
-  Why not use occupancy_grid_node
-  https://answers.ros.org/question/342040/cant-locate-cartographer_occupancy_grid_node-in-cartographer_ros-package/ -->
-
-  <node name="cartographer_node" pkg="cartographer_ros"
-      type="cartographer_node" args="
+  <!-- We launch the cartographer node -->  
+    <!-- Why not use occupancy_grid_node
+    https://answers.ros.org/question/342040/cant-locate-cartographer_occupancy_grid_node-in-cartographer_ros-package/ -->
+  
+    <node name="cartographer_node" pkg="cartographer_ros"
+        type="cartographer_node" args="
           -configuration_directory $(find gmapping_demo)/configuration_files
           -configuration_basename pioneer3at-kinect.lua"
-      output="screen">
-  </node>
+        output="screen">
+    </node>
 
 
 
-   <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
+     <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
         <remap from="image" to="/kinect_V2/depth/image_raw"/>
         <remap from="camera_info" to="/kinect_V2/depth/camera_info"/>
-        <!--param name="scan_time" value="0.5"/--> <!-- Para GMAPPING-->
         <param name="scan_time" value="0.5"/>
         <param name="scan_height" value="100"/>
         <param name="output_frame_id" value="kinect2_ir_link"/>
         <param name="range_min" value="0.01"/>
         <param name="range_max" value="5.0"/> 
-    <!--    <rosparam>
-          scan_height: 100
-          scan_time: 0.167
-        </rosparam> -->
-  </node> 
+      </node> 
 
 
-  <node pkg="turtlebot3_teleop" type="turtlebot3_teleop_key" name="turtlebot3_teleop_keyboard"  output="screen"/>
+      <node pkg="turtlebot3_teleop" type="turtlebot3_teleop_key" name="turtlebot3_teleop_keyboard"    output="screen"/>
 
-    <!-- Open Rviz window -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find cartographer_demo)/launch/cartographer.rviz"/>
+  <!-- Open Rviz window -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find cartographer_demo)/launch/cartographer.rviz"/>
 
 
 </launch>

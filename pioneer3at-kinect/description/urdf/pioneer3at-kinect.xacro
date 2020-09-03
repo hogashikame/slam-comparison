@@ -37,21 +37,6 @@
 		<material value="Gazebo/Red"/>
 	</gazebo>
 
-	<!--link name="odom">
-	</link-->
-	<!--joint name="odom_base" type="floating">
-		<origin xyz="0 0 0.01" rpy="0 0 0"/>
-		<parent link="odom"/>
-		<child link="base_link"/>
-	</joint-->
-<!--<link name="map">
-</link-->
-<!--<joint name="map_odom" type="fixed">
-		<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
-		<parent link="map"/>
-		<child link="odom"/>
-	</joint>
-	-->
 <!-- Top -->
 	<link name="top_plate">
 		<inertial>
@@ -86,6 +71,7 @@
 		<parent link="base_link"/>
 		<child link="top_plate"/>
 	</joint>
+
 <!-- Front + Back Sonar -->
 	<link name="front_sonar">
 		<inertial>
@@ -155,32 +141,33 @@
 
 <!-- Front Axles + Wheels + Hubcaps -->
 <xacro:macro name="p3at_front" params="suffix reflect">
-<link name="p3at_front_${suffix}_axle">
+	<link name="p3at_front_${suffix}_axle">
 		<inertial>
 			<mass value="0.1"/>
 			<origin xyz="0.01 0.01 0.01"/>
 			<inertia ixx="1.0" ixy="0.0" ixz="0.0"
 				 iyy="1.0" iyz="0.0" izz="1.0"/>
   	 	</inertial>
-	<visual name="base_visual">
-		<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
-		<geometry name="pioneer_geom">
-			<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/axle.stl"/>
-		</geometry>
-		<material name="AxleGrey">
-			<color rgba="0.5 0.5 0.5 1"/>
-		</material>
-	</visual>
-	<collision>
-		<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
-		<geometry>
-			<box size="0.01 0.01 0.01"/>
-		</geometry>
-	</collision>
-</link>
-<gazebo reference="p3at_front_${suffix}_axle">
+		<visual name="base_visual">
+			<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
+			<geometry name="pioneer_geom">
+				<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/axle.stl"/>
+			</geometry>
+			<material name="AxleGrey">
+				<color rgba="0.5 0.5 0.5 1"/>
+			</material>
+		</visual>
+		<collision>
+			<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
+			<geometry>
+				<box size="0.01 0.01 0.01"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<gazebo reference="p3at_front_${suffix}_axle">
 		<material value="Gazebo/Grey"/>
-</gazebo>
+	</gazebo>
 
 	<joint name="base_front_${suffix}_axle_joint" type="fixed">
 		<origin xyz="0.135 ${reflect*0.156} 0.111" rpy="0.01 0.01 0.01"/>
@@ -188,102 +175,103 @@
 		<child link="p3at_front_${suffix}_axle"/>
 	</joint>
 
-<link name="p3at_front_${suffix}_hub">
+	<link name="p3at_front_${suffix}_hub">
 		<inertial>
 			<mass value="0.1"/>
 			<origin xyz="0.01 0.01 0.01"/>
 			<inertia ixx="1.0" ixy="0.0" ixz="0.0"
 				 iyy="1.0" iyz="0.0" izz="1.0"/>
   	 	</inertial>
-	<visual name="base_visual">
-		<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
-		<geometry name="pioneer_geom">
-			<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/${suffix}_hubcap.stl"/>
-		</geometry>
-		<material name="HubcapYellow">
-			<color rgba="1.0 0.811 0.151 1.0"/>
-		</material>
-	</visual>
-	<collision>
-		<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
-		<geometry>
-			<box size="0.01 0.01 0.01"/>
-		</geometry>
-	</collision>
-</link>
+		<visual name="base_visual">
+			<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
+			<geometry name="pioneer_geom">
+				<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/${suffix}_hubcap.stl"/>
+			</geometry>
+			<material name="HubcapYellow">
+				<color rgba="1.0 0.811 0.151 1.0"/>
+			</material>
+		</visual>
+		<collision>
+			<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
+			<geometry>
+				<box size="0.01 0.01 0.01"/>
+			</geometry>
+		</collision>
+	</link>
+
 	<gazebo reference="p3at_front_${suffix}_hub">
 		<material value="Gazebo/Yellow"/>
 	</gazebo>
 
-<joint name="base_front_${suffix}_hub_joint" type="fixed">
+	<joint name="base_front_${suffix}_hub_joint" type="fixed">
 		<origin xyz="0 ${reflect*0.041} 0" rpy="0.01 0.01 0.01"/>
 		<parent link="p3at_front_${suffix}_axle"/>
 		<child link="p3at_front_${suffix}_hub"/>
-</joint>
+	</joint>
 
-<link name="p3at_front_${suffix}_wheel">
+	<link name="p3at_front_${suffix}_wheel">
 		<inertial>
 			<mass value="0.5"/>
 			<origin xyz="0.01 0.01 0.01"/>
 			<inertia ixx="0.012411765597" ixy="0" ixz="0"
          iyy="0.015218160428" iyz="0" izz="0.011763977943"/>
       </inertial>
-	<visual name="base_visual">
-		<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
-		<geometry name="pioneer_geom">
-			<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/wheel.stl"/>
-		</geometry>
-		<material name="WheelBlack">
-			<color rgba="0.117 0.117 0.117 1"/>
-		</material>
-	</visual>
-	<collision>
-		<origin xyz="0.01 0.01 0.01" rpy="${-(pi/2)} 0 0"/>
-		<geometry>
-	    <!--mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/wheel.stl"/-->
-	    <cylinder radius="0.111" length="0.075"/>
-		</geometry>
-	</collision>
-</link>
+		<visual name="base_visual">
+			<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
+			<geometry name="pioneer_geom">
+				<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/wheel.stl"/>
+			</geometry>
+			<material name="WheelBlack">
+				<color rgba="0.117 0.117 0.117 1"/>
+			</material>
+		</visual>
+		<collision>
+			<origin xyz="0.01 0.01 0.01" rpy="${-(pi/2)} 0 0"/>
+			<geometry>
+	    	    <cylinder radius="0.111" length="0.075"/>
+			</geometry>
+		</collision>
+	</link>
+	
 	<gazebo reference="p3at_front_${suffix}_wheel">
 		<material value="Gazebo/Black"/>
 	</gazebo>
 
-<joint name="p3at_front_${suffix}_wheel_joint" type="continuous">
- 	<axis xyz="0 1 0"/>
-        <anchor xyz="0.01 0.01 0.01"/>
-	<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
-	<parent link="p3at_front_${suffix}_hub"/>
-	<child link="p3at_front_${suffix}_wheel"/>
-
+	<joint name="p3at_front_${suffix}_wheel_joint" type="continuous">
+ 		<axis xyz="0 1 0"/>
+       	<anchor xyz="0.01 0.01 0.01"/>
+		<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
+		<parent link="p3at_front_${suffix}_hub"/>
+		<child link="p3at_front_${suffix}_wheel"/>
         <limit effort="100" velocity="100" />
         <joint_properties damping="0.7"/>
-</joint>
+	</joint>
 
 <!-- Back Axles + Wheels + Hubcaps -->
-<link name="p3at_back_${suffix}_axle">
+	<link name="p3at_back_${suffix}_axle">
 		<inertial>
 			<mass value="0.1"/>
 			<origin xyz="0.01 0.01 0.01"/>
 			<inertia ixx="1.0" ixy="0.0" ixz="0.0"
 				 iyy="1.0" iyz="0.0" izz="1.0"/>
   	 	</inertial>
-	  <visual name="base_visual">
-		  <origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
-		<geometry name="pioneer_geom">
-			<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/axle.stl"/>
-		</geometry>
-		<material name="AxleGrey">
-			<color rgba="0.5 0.5 0.5 1"/>
-		</material>
-	 </visual>
-	 <collision>
-		<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
-		<geometry>
-			<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/axle.stl"/>
-		</geometry>
-	</collision>
-</link>
+		<visual name="base_visual">
+			<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
+			<geometry name="pioneer_geom">
+				<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/axle.stl"/>
+			</geometry>
+			<material name="AxleGrey">
+				<color rgba="0.5 0.5 0.5 1"/>
+			</material>
+		</visual>
+		<collision>
+			<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
+			<geometry>
+				<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/axle.stl"/>
+			</geometry>
+		</collision>
+	</link>
+	
 	<gazebo reference="p3at_back_${suffix}_axle">
 		<material value="Gazebo/Grey"/>
 	</gazebo>
@@ -295,141 +283,138 @@
 	</joint>
 
 
-<link name="p3at_back_${suffix}_hub">
+	<link name="p3at_back_${suffix}_hub">
 		<inertial>
 			<mass value="0.1"/>
 			<origin xyz="0.01 0.01 0.01"/>
 			<inertia ixx="1.0" ixy="0.0" ixz="0.0"
 				 iyy="1.0" iyz="0.0" izz="1.0"/>
   	 	</inertial>
-	<visual name="base_visual">
-		<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
-		<geometry name="pioneer_geom">
-			<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/${suffix}_hubcap.stl"/>
-		</geometry>
-		<material name="HubcapYellow"/>
-	</visual>
-	<collision>
-		<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
-		<geometry>
-			<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/${suffix}_hubcap.stl"/>
-		</geometry>
-	</collision>
-</link>
+		<visual name="base_visual">
+			<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
+			<geometry name="pioneer_geom">
+				<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/${suffix}_hubcap.stl"/>
+			</geometry>
+			<material name="HubcapYellow"/>
+		</visual>
+		<collision>
+			<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
+			<geometry>
+				<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/${suffix}_hubcap.stl"/>
+			</geometry>
+		</collision>
+	</link>
+	
 	<gazebo reference="p3at_back_${suffix}_hub">
 		<material value="Gazebo/Yellow"/>
 	</gazebo>
 
- <joint name="p3at_back_${suffix}_hub_joint" type="fixed">
+ 	<joint name="p3at_back_${suffix}_hub_joint" type="fixed">
 		<origin xyz="-0 ${reflect*0.041} 0" rpy="0.01 0.01 0.01"/>
 		<parent link="p3at_back_${suffix}_axle"/>
 		<child link="p3at_back_${suffix}_hub"/>
- </joint>
+ 	</joint>
 
-<link name="p3at_back_${suffix}_wheel">
+	<link name="p3at_back_${suffix}_wheel">
 		<inertial>
 			<mass value="0.5"/>
 			<origin xyz="0.01 0.01 0.01"/>
 			<inertia ixx="0.012411765597" ixy="0" ixz="0"
-         iyy="0.015218160428" iyz="0" izz="0.011763977943"/>
-      </inertial>
-	<visual name="base_visual">
-		<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
-		<geometry name="pioneer_geom">
-			<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/wheel.stl"/>
-		</geometry>
-		<material name="WheelBlack"/>
-	</visual>
-	<collision>
-		<origin xyz="0.01 0.01 0.01" rpy="${-(pi/2)} 0 0"/>
-		<geometry>
-	    <!--mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/wheel.stl"/-->
-	    <cylinder radius="0.111" length="0.075"/>
-		</geometry>
-	</collision>
-</link>
+        	 iyy="0.015218160428" iyz="0" izz="0.011763977943"/>
+    	</inertial>
+		<visual name="base_visual">
+			<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
+			<geometry name="pioneer_geom">
+				<mesh filename="package://pioneer_kinect_description/meshes/p3at_meshes/wheel.stl"/>
+			</geometry>
+			<material name="WheelBlack"/>
+		</visual>
+		<collision>
+			<origin xyz="0.01 0.01 0.01" rpy="${-(pi/2)} 0 0"/>
+			<geometry>
+	        	<cylinder radius="0.111" length="0.075"/>
+			</geometry>
+		</collision>
+	</link>
+	
 	<gazebo reference="p3at_back_${suffix}_wheel">
 		<material value="Gazebo/Black"/>
 	</gazebo>
 
-
-
 	<joint name="p3at_back_${suffix}_wheel_joint" type="continuous">
-	  <axis xyz="0 1 0"/>
-          <anchor xyz="0.01 0.01 0.01"/>
-          <limit effort="100" velocity="100" />
-          <joint_properties damping="0.7"/>
+		<axis xyz="0 1 0"/>
+        <anchor xyz="0.01 0.01 0.01"/>
+        <limit effort="100" velocity="100" />
+        <joint_properties damping="0.7"/>
 		<origin xyz="0.01 0.01 0.01" rpy="0.01 0.01 0.01"/>
 		<parent link="p3at_back_${suffix}_hub"/>
 		<child link="p3at_back_${suffix}_wheel"/>
 	</joint>
 
 
- <gazebo reference="p3at_back_${suffix}_wheel">
-    <kp>1000000.0</kp> <!-- kp and kd for rubber -->
-    <kd>100.0</kd>
-    <mu1>10.0</mu1>
-    <mu2>1.0</mu2>
-    <fdir1>0 1 0</fdir1> <!-- is this correct? -->
-    <maxVel>1.0</maxVel>
-    <minDepth>0.00</minDepth>
-  </gazebo>
+	<gazebo reference="p3at_back_${suffix}_wheel">
+    	<kp>1000000.0</kp> <!-- kp and kd for rubber -->
+    	<kd>100.0</kd>
+    	<mu1>10.0</mu1>
+    	<mu2>1.0</mu2>
+    	<fdir1>0 1 0</fdir1> <!-- is this correct? -->
+    	<maxVel>1.0</maxVel>
+    	<minDepth>0.00</minDepth>
+  	</gazebo>
 
-  <gazebo reference="p3at_front_${suffix}_wheel">
-    <kp>1000000.0</kp> <!-- kp and kd for rubber -->
-    <kd>100.0</kd>
-    <mu1>10.0</mu1>
-    <mu2>1.0</mu2>
-    <fdir1>0 1 0</fdir1> <!-- is this correct? -->
-    <maxVel>1.0</maxVel>
-    <minDepth>0.00</minDepth>
-  </gazebo>
+ 	<gazebo reference="p3at_front_${suffix}_wheel">
+    	<kp>1000000.0</kp> <!-- kp and kd for rubber -->
+    	<kd>100.0</kd>
+    	<mu1>10.0</mu1>
+    	<mu2>1.0</mu2>
+    	<fdir1>0 1 0</fdir1> <!-- is this correct? -->
+    	<maxVel>1.0</maxVel>
+    	<minDepth>0.00</minDepth>
+  	</gazebo>
 
 </xacro:macro>
 
 
 <xacro:macro name="p3at_gazebo_ext">
-  <gazebo>
-      <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
-        <robotNamespace></robotNamespace>
-        <jointName>p3at_front_left_wheel_joint, p3at_front_right_wheel_joint, p3at_back_left_wheel_joint, p3at_back_right_wheel_joint</jointName>
-        <updateRate>10.0</updateRate>
-        <alwaysOn>true</alwaysOn>
-      </plugin>
-  </gazebo>
+	<gazebo>
+    	<plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+        	<robotNamespace></robotNamespace>
+        	<jointName>p3at_front_left_wheel_joint, p3at_front_right_wheel_joint, p3at_back_left_wheel_joint, p3at_back_right_wheel_joint</jointName>
+        	<updateRate>10.0</updateRate>
+        	<alwaysOn>true</alwaysOn>
+      	</plugin>
+  	</gazebo>
 
-<gazebo>
-  <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
-    <updateRate>0.0</updateRate>
-    <robotNamespace>/</robotNamespace>
-    <leftFrontJoint>p3at_front_left_wheel_joint</leftFrontJoint>
-    <rightFrontJoint>p3at_front_right_wheel_joint</rightFrontJoint>
-    <leftRearJoint>p3at_back_left_wheel_joint</leftRearJoint>
-    <rightRearJoint>p3at_back_right_wheel_joint</rightRearJoint>
-    <wheelSeparation>0.4</wheelSeparation>
-    <wheelDiameter>0.215</wheelDiameter>
-    <robotBaseFrame>base_link</robotBaseFrame>
-    <torque>20</torque>
-    <topicName>cmd_vel</topicName>
-    <odometryFrame>odom</odometryFrame>
-    <broadcastTF>true</broadcastTF>
-  </plugin>
-</gazebo>
+	<gazebo>
+  		<plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+    		<updateRate>0.0</updateRate>
+    		<robotNamespace>/</robotNamespace>
+    		<leftFrontJoint>p3at_front_left_wheel_joint</leftFrontJoint>
+    		<rightFrontJoint>p3at_front_right_wheel_joint</rightFrontJoint>
+    		<leftRearJoint>p3at_back_left_wheel_joint</leftRearJoint>
+    		<rightRearJoint>p3at_back_right_wheel_joint</rightRearJoint>
+    		<wheelSeparation>0.4</wheelSeparation>
+    		<wheelDiameter>0.215</wheelDiameter>
+    		<robotBaseFrame>base_link</robotBaseFrame>
+    		<torque>20</torque>
+    		<topicName>cmd_vel</topicName>
+    		<odometryFrame>odom</odometryFrame>
+    		<broadcastTF>true</broadcastTF>
+  		</plugin>
+	</gazebo>
+
+	<!-- Adding kinect camera -->
+	<!-- https://github.com/wangxian4423/kinect_v2_udrf -->
+	<xacro:kinect_v2  parent="base_link">
+		<origin xyz="-0.087 -0.0125 0.2870" rpy="0 0 0"/>
+	</xacro:kinect_v2>
 
 
-  <!-- Adding kinect camera -->
- <xacro:kinect_v2  parent="base_link">
-        <origin xyz="-0.087 -0.0125 0.2870" rpy="0 0 0"/>
- </xacro:kinect_v2>
+	</xacro:macro>
 
+	<xacro:p3at_front suffix="left" reflect="1"/>
+	<xacro:p3at_front suffix="right" reflect="-1"/>
 
-</xacro:macro>
-<xacro:p3at_front suffix="left" reflect="1"/>
-<xacro:p3at_front suffix="right" reflect="-1"/>
-<!--
-<xacro:p3at_back  suffix="left" reflect="1"/>
-<xacro:p3at_back  suffix="right" reflect="-1"/>
--->
 <xacro:p3at_gazebo_ext/>
 
 </robot>
