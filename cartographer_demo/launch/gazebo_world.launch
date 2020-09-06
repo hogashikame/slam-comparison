@@ -15,7 +15,7 @@
 
 
   <!-- Put Pioneer3at with hokuyo sensor in our gazebo world-->
-    <include file="$(find gmapping_demo)/launch/spawn_pioneer3at_kinect.xml"/>
+    <include file="$(find cartographer_demo)/launch/spawn_pioneer3at_kinect.xml"/>
   <!-- convert joint states to TF transforms for rviz, etc -->
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
