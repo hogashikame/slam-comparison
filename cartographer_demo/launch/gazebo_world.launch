@@ -26,7 +26,7 @@
   
     <node name="cartographer_node" pkg="cartographer_ros"
         type="cartographer_node" args="
-          -configuration_directory $(find gmapping_demo)/configuration_files
+          -configuration_directory $(find cartographer_demo)/configuration_files
           -configuration_basename pioneer3at-kinect.lua"
         output="screen">
     </node>
