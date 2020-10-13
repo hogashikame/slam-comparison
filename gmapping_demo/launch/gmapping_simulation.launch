@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find gmapping_demo)/launch/gazebo_simulation.launch" />
+  <include file="$(find gmapping_demo)/launch/depthimage_to_laserscan.launch" />
+  <include file="$(find gmapping_demo)/launch/gmapping_slam.launch" />
+  <include file="$(find gmapping_demo)/launch/teleop.launch" />
+  <include file="$(find gmapping_demo)/launch/rviz.launch" />
+
+</launch>

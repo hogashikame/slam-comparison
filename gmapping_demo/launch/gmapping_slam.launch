@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<launch>
+	  <!-- Open gmapping slam -->
+    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+        <!--remap from="scan" to="base_scan"/-->
+        <param name="odom_frame" value="odom"/>
+        <param name="map_update_interval" value="0.0"/>
+        <!-- https://answers.ros.org/question/12023/gmapping-doesnt-build-a-clear-map/ -->
+        <param name="maxUrange" value="4.5"/>
+        <param name="maxRange" value="5.5"/>
+        <param name="sigma" value="0.05"/>
+        <param name="kernelSize" value="1"/>
+        <param name="lstep" value="0.05"/>
+        <param name="astep" value="0.05"/>
+        <param name="iterations" value="5"/>
+        <param name="lsigma" value="0.075"/>
+        <param name="ogain" value="3.0"/>
+        <param name="lskip" value="0"/>
+        <param name="srr" value="0.01"/>
+        <param name="srt" value="0.01"/>
+        <param name="str" value="0.01"/>
+        <param name="stt" value="0.01"/>
+        <!-- https://answers.ros.org/question/193756/repeated-sideways-jumps-in-gmapping-with-hokuyo/-->        
+        <param name="linearUpdate" value="0.05"/>     <!-- param name="linearUpdate" value="0.5"/-->
+        <param name="angularUpdate" value="0.0872665"/>   <!--param name="angularUpdate" value="0.436"/-->
+        <param name="temporalUpdate" value="-1.0"/>
+        <param name="resampleThreshold" value="0.5"/>
+        <param name="particles" value="1"/>
+        <param name="delta" value="0.05"/>
+        <param name="llsamplerange" value="0.01"/>
+        <param name="llsamplestep" value="0.01"/>
+        <param name="lasamplerange" value="0.005"/>
+        <param name="lasamplestep" value="0.005"/>
+        <!--https://answers.ros.org/question/189159/bad-maps-produced-by-gmapping-in-simulation-with-feature-poor-environments//-->
+        <param name="minimumScore" value="1000"/>
+        
+
+        <param name="map_resolution" value="0.01" />
+    </node>
+
+</launch>
