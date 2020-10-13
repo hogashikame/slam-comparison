@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+	<node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
+        <remap from="image" to="/kinect_V2/depth/image_raw"/>
+        <remap from="camera_info" to="/kinect_V2/depth/camera_info"/>
+        <param name="scan_time" value="0.5"/>
+        <param name="scan_height" value="100"/>
+        <param name="output_frame_id" value="kinect2_ir_link"/>
+        <param name="range_min" value="0.01"/>
+        <param name="range_max" value="5.0"/> 
+    </node> 
+
+</launch>

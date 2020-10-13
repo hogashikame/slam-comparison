@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find cartographer_demo)/launch/gazebo_simulation.launch" />
+  <include file="$(find cartographer_demo)/launch/depthimage_to_laserscan.launch" />
+  <include file="$(find cartographer_demo)/launch/cartographer_slam.launch" />
+  <include file="$(find cartographer_demo)/launch/teleop.launch" />
+  <include file="$(find cartographer_demo)/launch/rviz.launch" />
+
+</launch>

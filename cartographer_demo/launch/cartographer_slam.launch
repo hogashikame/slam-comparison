@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+	  <!-- Open catographer slam -->
+    <node name="cartographer_node" pkg="cartographer_ros"
+        type="cartographer_node" args="
+          -configuration_directory $(find cartographer_demo)/configuration_files
+          -configuration_basename pioneer3at-kinect.lua"
+        output="screen">
+    </node>
+
+</launch>

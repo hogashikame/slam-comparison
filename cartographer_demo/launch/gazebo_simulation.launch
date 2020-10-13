@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<launch>
+
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="world_name" value="$(find mapas)/include/mapas/pasillo_largo3.world.world"/>
+      <arg name="paused" value="true"/>
+      <arg name="use_sim_time" value="true"/>
+      <arg name="gui" value="true"/>-
+      <arg name="headless" value="false"/>
+      <arg name="recording" value="false"/>
+      <arg name="debug" value="false"/>
+    </include>
+
+
+  <!-- Put Pioneer3at with hokuyo sensor in our gazebo world-->
+    <include file="$(find gmapping_demo)/launch/spawn_pioneer3at_kinect.xml"/>
+  
+  <!-- convert joint states to TF transforms for rviz, etc -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+
+</launch>

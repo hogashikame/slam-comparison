@@ -42,13 +42,13 @@ TRAJECTORY_BUILDER_2D.max_range = 5.5
 TRAJECTORY_BUILDER_2D.missing_data_ray_length = 2.0   -- Actualza más rápido
 TRAJECTORY_BUILDER_2D.use_imu_data = false
 TRAJECTORY_BUILDER_2D.motion_filter.max_time_seconds = 0.3
-TRAJECTORY_BUILDER_2D.motion_filter.max_distance_meters = 0.2
+TRAJECTORY_BUILDER_2D.motion_filter.max_distance_meters = 0.01
 TRAJECTORY_BUILDER_2D.motion_filter.max_angle_radians = math.rad(3.)
 TRAJECTORY_BUILDER_2D.ceres_scan_matcher.translation_weight = 70
 TRAJECTORY_BUILDER_2D.ceres_scan_matcher.rotation_weight = 300
 
 TRAJECTORY_BUILDER_2D.submaps.resolution = 0.035
-TRAJECTORY_BUILDER_2D.submaps.num_range_data = 120
+TRAJECTORY_BUILDER_2D.submaps.num_range_data = 10
 SPARSE_POSE_GRAPH.optimize_every_n_scans = 120
 SPARSE_POSE_GRAPH.constraint_builder.min_score = 0.82
 SPARSE_POSE_GRAPH.constraint_builder.sampling_ratio = 1.
